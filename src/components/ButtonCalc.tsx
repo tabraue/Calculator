@@ -3,14 +3,15 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from '../theme/theme';
 
 interface Props {
-  text: String;
-  bgcolor?: String;
+  text: string;
+  bgcolor?: string;
   big?: boolean;
+  action: (number: string) => void;
 }
 
-const ButtonCalc = ({ text, bgcolor = '#2D2D2D', big = false }: Props) => {
+const ButtonCalc = ({ text, bgcolor = '#2D2D2D', big = false, action }: Props) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={ () => action(text) }>
     <View
       style={{
         ...styles.btn,
