@@ -8,9 +8,18 @@ export const useCalculator = () => {
     divide,
   }
 
+  const operatorType = {
+    add: '+',
+    subtract: '-',
+    multiply: 'x',
+    divide: '/',
+  };
+
   const [prevNumber, setPrevNumber] = useState('0');
   const [number, setNumber] = useState('0');
+  const [operator, setOperator] = useState('');
   const lastOperation = useRef<Operators>();
+  const cero = 'You cannot divide by 0';
 
   const clean = () => {
     setNumber('0');
@@ -18,6 +27,8 @@ export const useCalculator = () => {
   };
 
   const doNumber = (numberPressed: string) => {
+    if (prevNumber === cero) setPrevNumber('0');
+
     if (number.includes('.') && numberPressed === '.') return;
     // only 1 dot
 
@@ -29,8 +40,6 @@ export const useCalculator = () => {
         setNumber(number + numberPressed);
       } else if (numberPressed !== '0' && !number.includes('.')) {
         setNumber(numberPressed);
-
-        //
       } else if (numberPressed === '0' && !number.includes('.')) {
         setNumber(number);
       } else {
@@ -62,30 +71,37 @@ export const useCalculator = () => {
   const switchNumToPrev = () => {
     if (number.endsWith('.')) {
       setPrevNumber(number.slice(0, -1));
-    } else {
+    }else {
       setPrevNumber(number);
     }
     setNumber('0');
   };
 
+  const operation = (sign: string) => {
+  }
+
   const divideBtn = () => {
     switchNumToPrev();
     lastOperation.current = Operators.divide;
+    setOperator(operatorType.divide);
   };
 
   const multiplyBtn = () => {
     switchNumToPrev();
     lastOperation.current = Operators.multiply;
+    setOperator(operatorType.multiply);
   };
 
   const subtractBtn = () => {
     switchNumToPrev();
     lastOperation.current = Operators.subtract;
+    setOperator(operatorType.subtract);
   };
 
   const addBtn = () => {
     switchNumToPrev();
     lastOperation.current = Operators.add;
+    setOperator(operatorType.add);
   };
 
   const resultBtn = () => {
@@ -94,7 +110,8 @@ export const useCalculator = () => {
 
     switch (lastOperation.current) {
       case Operators.divide:
-        setNumber(`${num2 / num1}`);
+        if (num1 === 0) setNumber(cero);
+        else setNumber(`${num2 / num1}`);
         break;
       case Operators.multiply:
         setNumber(`${num1 * num2}`);
@@ -109,13 +126,14 @@ export const useCalculator = () => {
         setNumber('0');
         break;
     }
-
     setPrevNumber('0');
   };
 
   return {
     prevNumber,
     number,
+    operator,
+    operation,
     clean,
     doNumber,
     positiveOrNegative,

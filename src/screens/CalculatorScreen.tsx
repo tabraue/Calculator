@@ -8,6 +8,7 @@ const CalculatorScreen = () => {
   const {
     prevNumber,
     number,
+    operator,
     clean,
     doNumber,
     positiveOrNegative,
@@ -22,7 +23,7 @@ const CalculatorScreen = () => {
   return (
     <View style={styles.calculatorContainer}>
       {prevNumber !== '0' && (
-        <Text style={styles.prevResult}>{prevNumber}</Text>
+        <Text style={styles.prevResult}>{prevNumber} {operator}</Text>
       )}
       <Text style={styles.result} numberOfLines={1} adjustsFontSizeToFit>
         {number}

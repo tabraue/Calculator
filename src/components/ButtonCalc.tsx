@@ -1,6 +1,9 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from '../theme/theme';
+
+const windowWidth = Dimensions.get('window').width;
+
 
 interface Props {
   text: string;
@@ -16,7 +19,7 @@ const ButtonCalc = ({ text, bgcolor = '#2D2D2D', big = false, action }: Props) =
       style={{
         ...styles.btn,
         backgroundColor: bgcolor,
-        width: big ? 180 : 80
+        width: big ? windowWidth*0.45 : windowWidth*0.2,
       }}>
       <Text
         style={{
